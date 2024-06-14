@@ -1,0 +1,47 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules/
+frontend/personalcrm/node_modules/
+backend/node_modules/
+.pnp
+.pnp.js
+
+# Environment variables
+backend/.env
+finalFrontend/personalcrm/.env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+
+# Production
+/build
+
+# Miscellaneous
+.DS_Store
+.vscode/
+*.swp
+
+# Specific directories to be included (whitelist approach)
+!finalFrontend/personalcrm/
+!finalFrontend/personalcrm/**
+
+# Ignore everything in finalFrontend/personalcrm except for specific file types
+finalFrontend/personalcrm/*
+!finalFrontend/personalcrm/*.js
+!finalFrontend/personalcrm/*.jsx
+!finalFrontend/personalcrm/*.json
+!finalFrontend/personalcrm/*.html
+!finalFrontend/personalcrm/*.css
