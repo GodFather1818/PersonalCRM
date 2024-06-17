@@ -1,25 +1,15 @@
 const mongoose = require("mongoose");
 
-// const detailsSchema = new mongoose.Schema({
-//     tasks: {
-//         type: String,
-//         required: [true],
-//     },
-//     description:{
-//         type: String,
-//         required: [true],
-//     }
-// })
 
 
 const taskSchema = new mongoose.Schema({
     title: {
         type: String,
-        // required: [true, "The Title of the Task Cannot remain Empty!"]
+        required: [true, "The Title of the Task Cannot remain Empty!"]
     },
     details: {
         type: Array, // Defines details as an object here
-        // required: [true, "The details of the task cannot remain empty!"],
+        required: [true, "The details of the task cannot remain empty!"],
         of: {
             type: Object,
             properties: {

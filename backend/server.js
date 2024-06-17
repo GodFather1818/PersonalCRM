@@ -10,6 +10,8 @@ const ObjectId = require("mongoose").Types.ObjectId;
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const Task = require("./models/taskModel");
+const Contacts = require("./models/contactModel");
+
 console.log("MongoDB URI", process.env.URI);
 
 // Initializing them for the usage.
@@ -31,7 +33,7 @@ app.use(express.json());
 
 // Email configuration
 const transporter = nodemailer.createTransport({
-  service: "gmail", // Use your email service
+  service: "gmail", // Email service
   auth: {
     user: process.env.MAILID,
     pass: process.env.PASSWORD,
@@ -77,7 +79,7 @@ cron.schedule('* * * * *', async () => {
   }
 });
 
-
+// -----------------                  For Task Route             ----------------------------
 
 app.get("/tasks", async (req, res) => {
   const tasks = await Task.find().sort({ priority: 1 });
@@ -132,6 +134,25 @@ app.delete("/tasks/:taskId", async (req, res) => {
   await Task.findByIdAndDelete(req.params.taskId);
   res.json({ message: "Task deleted" });
 });
+
+
+// -------------------                           For Contacts Route            ------------------------------------
+app.get("/contacts", async(req, res) => {
+  try {
+    const contacts = await Contacts.find()
+    console.log(contacts);
+    res.json(contacts);
+  }catch(error) {
+    res.status(500).json({ message: "Error fetching contacts", error });  }
+});
+
+
+
+
+app.post("/contacts/createcontact", async (req, res)=>{ 
+
+})
+
 
 app.listen(process.env.PORT, () =>
   console.log(`Server running on port ${process.env.PORT}`)

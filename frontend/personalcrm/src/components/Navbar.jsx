@@ -33,6 +33,9 @@ function NavbarE() {
               <Link to="/tasks" className="text-black font-bold visible ml-4">
                 Tasks
               </Link>
+              <Link to="/contacts" className="text-black font-bold visible ml-4">
+                Contacts
+              </Link>
             </Nav>
 
         </Navbar.Collapse>

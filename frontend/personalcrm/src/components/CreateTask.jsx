@@ -128,6 +128,7 @@ function CreateTask() {
             placeholder="Enter priority(eg:1, 2, ....)"
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
+            required
           />
         </Form.Group>
 
@@ -137,6 +138,8 @@ function CreateTask() {
             type="date"
             value={deadline}
             onChange={(e) => setDeadline(e.target.value)}
+            required
+
           />
         </Form.Group>
 
@@ -147,6 +150,8 @@ function CreateTask() {
             placeholder="Enter assignee"
             value={assignee}
             onChange={(e) => setAssignee(e.target.value)}
+            required
+
           />
         </Form.Group>
 
@@ -172,6 +177,8 @@ function CreateTask() {
             type="datetime-local"
             value={reminder}
             onChange={(e) => setReminder(e.target.value)}
+            required
+
           />
         </Form.Group>
 
