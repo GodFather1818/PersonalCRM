@@ -20,7 +20,7 @@ function NavbarE() {
           `
         }
     </style>
-    <Navbar expand="lg" className="navbar-custom">
+    <Navbar expand="lg" className="navbar-custom h-20">
       <Container>
         <Navbar.Brand href="#home" className="mr-6">Personal CRM</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
