@@ -4,7 +4,13 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        Playwrite: ["Playwrite ES Deco", "cursive"],
+        auPlaywrite: ["Playwrite AU SA", "cursive"],
+        frPlaywrite:["Playwrite FR Trad", "cursive"],
+      }
+    },
   },
   plugins: [],
 }

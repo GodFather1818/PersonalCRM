@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const indiaPhoneRegExp = /^\+?91\d{10}$/;
-
+// !/^\+?91\d{10}$/.test(formData.phone)
 
 const contactsSchema = new mongoose.Schema({
     name: {

@@ -64,6 +64,26 @@ function CreateTask() {
   };
 
   return (
+    <>
+    <style type="text/css">
+        {`
+         
+        .btn-flat {
+          background-color: black;
+          color: white;
+        }
+        .btn-flat:hover {
+          background-color: gray;
+          color: black;
+        }
+        .btn-center: {
+          display:flex;
+          justify-content:center;
+          align-items:center
+        }
+        
+        `}
+      </style>
     <Container>
       <h1>Create New Task</h1>
       <Form onSubmit={handleCreateTask}>
@@ -183,7 +203,7 @@ function CreateTask() {
         </Form.Group>
 
         <Button
-          variant="primary"
+          variant="flat"
           onClick={(e) => {
             handleCreateTask(e);
           }}
@@ -198,6 +218,7 @@ function CreateTask() {
         </Alert>
       )}
     </Container>
+    </>
   );
 }
 

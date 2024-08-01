@@ -59,9 +59,12 @@ const Tasks = () => {
   // };
 
   return (
-    <>
+    <div className=" overflow-y-hidden">
       <style type="text/css">
         {`
+         body {
+          overflow-y: scroll;
+        }
         .btn-flat {
           background-color: black;
           color: white;
@@ -78,8 +81,8 @@ const Tasks = () => {
         
         `}
       </style>
-      <div className="container">
-        <div className="flex justify-around ">
+      <div className="container overflow-hidden">
+        <div className="flex flex-column justify-center items-center sm:flex sm:justify-around  md:  lg: ">
           <h1>Already Exisiting Tasks</h1>
           <div className="flex justify-center items-center gap-[3vw]  pt-3 px-3">
             <div className="flex-col items-center justify-center text-center">
@@ -143,7 +146,7 @@ const Tasks = () => {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

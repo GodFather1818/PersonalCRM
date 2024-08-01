@@ -11,7 +11,7 @@ const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const Task = require("./models/taskModel");
 const Contacts = require("./models/contactModel");
-
+const Journal = require("./models/journalModel")
 console.log("MongoDB URI", process.env.URI);
 
 // Initializing them for the usage.
@@ -137,6 +137,7 @@ app.delete("/tasks/:taskId", async (req, res) => {
 
 
 // -------------------                           For Contacts Route            ------------------------------------
+
 app.get("/contacts", async(req, res) => {
   try {
     const contacts = await Contacts.find()
@@ -146,12 +147,72 @@ app.get("/contacts", async(req, res) => {
     res.status(500).json({ message: "Error fetching contacts", error });  }
 });
 
+app.delete("/contacts/:contactId", async(req, res)=>{
+  try {
+    await Contacts.findByIdAndDelete(req.params.contactId);
+    if (!contact) return res.json({ message: "Contact not found" });
+    res.json({ message: "Contact deleted successfully" });
+  } catch (error) {
+    res.json({ message: "Error deleting contact", error });
+  }
+});
+
+app.post("/contacts/createone", async (req, res)=>{ 
+  const contact = new Contacts({
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    group: req.body.group,
+  }); 
+  console.log(contact);
+  try {
+    console.log("Inside the Try Block")
+    const newContact = await contact.save();
+    console.log("Cotact Saved Successfully from the server side as well!: ", newContact);
+    res.json(newContact);
+
+  }catch (err) {
+    res.json({message: err.message});
+  }
+});
+
+//  ---------------------------------------- For Journal Routes ------------------------
+
+app.get('/entries', async (req, res) => {
+  const entries = await Journal.find();
+  res.json(entries);
+});
+
+app.post('/entries', async (req, res) => {
+  const { title, content, isPrivate } = req.body;
+  const newEntry = new Journal({ title, content, isPrivate });
+  await newEntry.save();
+  res.json(newEntry);
+});
+
+app.get('/entries/:id', async (req, res) => {
+  const entry = await Journal.findById(req.params.id);
+  res.json(entry);
+});
+
+app.put('/entries/:id', async (req, res) => {
+  const { title, content, isPrivate } = req.body;
+  const updatedEntry = await Journal.findByIdAndUpdate(
+    req.params.id,
+    { title, content, isPrivate },
+    { new: true }
+  );
+  res.json(updatedEntry);
+});
+
+app.delete('/entries/:id', async (req, res) => {
+  await Journal.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Entry deleted' });
+});
 
 
 
-app.post("/contacts/createcontact", async (req, res)=>{ 
 
-})
 
 
 app.listen(process.env.PORT, () =>
