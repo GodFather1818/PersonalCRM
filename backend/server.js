@@ -11,7 +11,10 @@ const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const Task = require("./models/taskModel");
 const Contacts = require("./models/contactModel");
-const Journal = require("./models/journalModel")
+const Journal = require("./models/journalModel");
+const Password = require("./models/Password");
+const User = require('./models/user');
+const bcrypt = require("bcrypt");
 console.log("MongoDB URI", process.env.URI);
 
 // Initializing them for the usage.
@@ -78,6 +81,64 @@ cron.schedule('* * * * *', async () => {
     console.error('Error fetching tasks or sending emails:', error);
   }
 });
+
+//  ----------------------------      AUTHENTICATION ROUTEES      --------------------
+app.get("/register", (req, res)=> {
+
+});
+
+app.post("/register",async (req, res)=> {
+
+    const {username, email, password} = req.body;
+
+    try {
+
+      const existingUser = await User.findOne({email: email});
+      if(user) {
+        return res.status(409).send({message: "User Already Exists!"});
+      }
+
+      const salt = await bcrypt.genSalt(Number(process.env.SALT));
+      const hashedPassword = await bcrypt.hash(password, salt);
+      const user = new User({...req.body, password:hashedPassword}).save();
+      res.status(201).send({message: "User Created Succesfully"});
+
+    } catch (error) {
+      res.status(500).send({message: "Internal Server Error!"});
+    }
+
+});
+
+
+app.post("/login", async(req, res)=> {
+  const {email, password} = req.body;
+
+  try {
+    
+    const user = await User.findOne({email: req.body.email});
+    if(!user) {
+      return res.status(401).send({message: "Invalid Email or Password!"});
+    }
+
+    const isMatch = await bcrypt.compare(req.body.password, user.password);
+    if (!isMatch) {
+      return res.status(401).send({message: "Invalid Email or Password!"});
+    }
+
+    const token = user.generateAuthToken();
+    res.status(200).send({data: token, message:"Logged In Successfully!"});
+
+  } catch (error) {
+    res.status(500).send({message: "Internal Server Error!"});
+  }
+  
+
+
+
+
+});
+
+
 
 // -----------------                  For Task Route             ----------------------------
 
@@ -210,10 +271,77 @@ app.delete('/entries/:id', async (req, res) => {
   res.json({ message: 'Entry deleted' });
 });
 
+//  ------------------- password manager routes --------------------
 
 
+app.post("/password-manager/new", async (req, res) => {
+  try {
+      const { website, password, securityQuestions } = req.body;
+
+      // Hashing the answers of the security questions
+      const hashedQuestions = await Promise.all(
+          securityQuestions.map(async (q) => ({
+              question: q.question,
+              answer: await bcrypt.hash(q.answer, 10),
+          }))
+      );
+
+      const newPassword = new Password({
+          website,
+          password, // Store the password directly
+          securityQuestions: hashedQuestions,
+      });
+
+      await newPassword.save();
+      res.json({ message: "Password Saved Successfully" });
+  } catch (error) {
+      console.error("Error Saving Password: ", error);
+      res.status(500).json({ message: "Server Error!" });
+  }
+});
+
+app.get("/password-manager", async (req, res)=>{
+  try {
+    const passwords = await Password.find().select('website date securityQuestions');
+    res.json(passwords);
+  }catch(error) {
+    console.error("Error while fetching the passwords: ", error);
+    res.json({message: "Server Error!"});
+  }
+});
+
+app.delete("/password-manager/:id", async(req, res)=> {
+    await Password.findByIdAndDelete(req.params.id);
+    res.json({message: "Password Entry deleted"});
+});
 
 
+app.post("/password-manager/verify", async (req, res) => {
+  try {
+      const { id, answers } = req.body;
+      const passwordEntry = await Password.findById(id);
+
+      if (!passwordEntry) {
+          return res.status(404).json({ message: "Password Entry Not Found!" });
+      }
+
+      const isCorrect = await Promise.all(
+          answers.map((answer) => passwordEntry.isCorrectAnswer(answer.question, answer.answer))
+      );
+
+      if (isCorrect.every((result) => result)) {
+          res.json({ password: passwordEntry.password });
+      } else {
+          res.status(401).json({ message: "Incorrect answers" });
+      }
+  } catch (error) {
+      console.error("Error verifying answers: ", error);
+      res.status(500).json({ message: "Server Error!" });
+  }
+});
+
+
+// ------------Listening the App ----------------
 
 app.listen(process.env.PORT, () =>
   console.log(`Server running on port ${process.env.PORT}`)

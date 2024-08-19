@@ -13,6 +13,8 @@ import Footer from "./components/Footer"
 import Journal from './components/Journal'
 import JournalDetail from './components/JournalDetail'
 import CreateJournal from './components/CreateJournal'
+import PasswordManager from './components/PasswordManager'
+import CreatePassword from './components/CreatePassword'
 
 function App() {
 
@@ -31,6 +33,10 @@ function App() {
           <Route path="/entries" element = {<Journal />} />
           <Route path='/entries/createone' element={<CreateJournal />} /> 
           <Route path='/entries/:id' element={<JournalDetail />} />
+          <Route path='/password-manager' element={<PasswordManager />} />
+          <Route path='/password-manager/new' element={<CreatePassword />} />
+
+
         </Routes>
         </main>
         <Footer />

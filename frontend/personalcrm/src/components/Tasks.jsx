@@ -37,26 +37,15 @@ const Tasks = () => {
   const formatReminder = (deadline) => {
     if (!deadline) return null;
 
-    // const dateObject = new Date(deadline);
-    // const date = dateObject.toLocaleDateString('en-GB', {
-    //   day: '2-digit',
-    //   month: '2-digit',
-    //   year: 'numeric',
-    // }).split('/').reverse().join('/');
+    
 
     const formattedDate = moment(deadline).format("DD/MM/YYYY");
-    // clg
-    // const time = dateObject.toLocaleTimeString('en-US', {
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    // });
+    
 
     return `Date: ${formattedDate}`;
   };
 
-  // const handleToggle = (eventKey) => {
-  //   setActiveKey(eventKey === activeKey ? null : eventKey); // Toggle active panel
-  // };
+ 
 
   return (
     <div className=" overflow-y-hidden">
@@ -65,14 +54,17 @@ const Tasks = () => {
          body {
           overflow-y: scroll;
         }
+
         .btn-flat {
           background-color: black;
           color: white;
         }
+
         .btn-flat:hover {
           background-color: gray;
           color: black;
         }
+
         .btn-center: {
           display:flex;
           justify-content:center;
@@ -83,20 +75,26 @@ const Tasks = () => {
       </style>
       <div className="container overflow-hidden">
         <div className="flex flex-column justify-center items-center sm:flex sm:justify-around  md:  lg: ">
+
           <h1>Already Exisiting Tasks</h1>
+
           <div className="flex justify-center items-center gap-[3vw]  pt-3 px-3">
+
             <div className="flex-col items-center justify-center text-center">
               <div className="bg-[#0B5ED7] w-6 h-6 mx-[1.7rem]"></div>
               <p className="w-full  mx-2">Planned</p>
             </div>
+
             <div>
               <div className="bg-[#FFC107] w-6 h-6 mx-[1.3rem]"></div>
               <p>Progress</p>
             </div>
+
             <div>
               <div className="bg-[#28A745] w-6 h-6 mx-[1.3rem]"></div>
               <p>Completed</p>
             </div>
+
           </div>
         </div>
 

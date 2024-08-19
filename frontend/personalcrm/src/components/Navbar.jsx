@@ -67,6 +67,9 @@ function NavbarE() {
               <Link to="/entries" className="text-black font-bold visible ml-4 nav-link">
                 Journals
               </Link>
+              <Link to="/password-manager" className="text-black font-bold visible ml-4 nav-link">
+                Password Manager
+              </Link>
             </Nav>
         </Navbar.Collapse>
       </Container>
