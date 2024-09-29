@@ -49,15 +49,12 @@ function CreateTask() {
     } catch (error) {
       console.error("Error creating task:", error);
       if (error.response) {
-        // Server responded with a status other than 200 range
         console.error("Response data:", error.response.data);
         console.error("Response status:", error.response.status);
         console.error("Response headers:", error.response.headers);
       } else if (error.request) {
-        // Request was made but no response received
         console.error("Request data:", error.request);
       } else {
-        // Something else caused the error
         console.error("Error message:", error.message);
       }
     }

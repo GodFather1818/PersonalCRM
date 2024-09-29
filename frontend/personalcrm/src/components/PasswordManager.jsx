@@ -25,7 +25,6 @@ const PasswordManager = () => {
       const response = await axios.get(
         "http://localhost:5000/password-manager"
       );
-      // Sort the passwords in descending order by date
     const sortedPasswords = response.data.sort(
         (a, b) => new Date(b.date) - new Date(a.date)
       );

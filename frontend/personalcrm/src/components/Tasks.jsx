@@ -7,7 +7,6 @@ import moment from "moment";
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [activeKey, setActiveKey] = useState(null);
-  // const [open, setOpen] = useState(false);
   console.log("1st Print");
 
   useEffect(() => {

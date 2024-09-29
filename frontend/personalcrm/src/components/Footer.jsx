@@ -54,18 +54,12 @@ function Footer() {
               <i className="fab fa-github"></i>
             </a>
           </div>
-          {/* <!-- Right --> */}
         </section>
-        {/* <!-- Section: Social media --> */}
 
-        {/* <!-- Section: Links  --> */}
         <section className="">
           <div className="container text-center text-md-start mt-5">
-            {/* <!-- Grid row --> */}
             <div className="row mt-3">
-              {/* <!-- Grid column --> */}
               <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                {/* <!-- Content --> */}
                 <h6 className="text-uppercase fw-bold mb-4">
                   Personal Organizer and CRM Manager
                 </h6>
@@ -80,7 +74,6 @@ function Footer() {
               </div>
 
               <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                {/* <!-- Links --> */}
                 <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
                 <p>
                   <i className="fas fa-home me-3"></i> Mumbai, 400054, INDIA
@@ -118,23 +111,17 @@ function Footer() {
                   <span>+91 9999999999</span>
                 </div>
               </div>
-              {/* <!-- Grid column --> */}
             </div>
-            {/* <!-- Grid row --> */}
           </div>
         </section>
-        {/* <!-- Section: Links  --> */}
 
-        {/* <!-- Copyright --> */}
         <div
           className="text-center p-4"
           style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
         >
           © {date} Copyright
         </div>
-        {/* <!-- Copyright --> */}
       </footer>
-      {/* <!-- Footer --> */}
     </section>
   );
 }

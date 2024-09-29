@@ -19,18 +19,10 @@ function TaskDetail() {
     if (!deadline) return null; 
 
     const dateObject = new Date(deadline);
-    // const date = dateObject.toLocaleDateString('en-GB', {
-    //   day: '2-digit',
-    //   month: '2-digit',
-    //   year: 'numeric',
-    // }).split('/').reverse().join('/');
+   
 
     const formattedDate = moment(deadline).format("DD/MM/YYYY");
-    // clg
-    // const time = dateObject.toLocaleTimeString('en-US', {
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    // });
+    
 
     return `${formattedDate}`;
   };
@@ -38,7 +30,6 @@ function TaskDetail() {
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:5000/tasks/${taskId}`);
-      // navigate('/tasks');
       setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);

@@ -14,7 +14,6 @@ const CreateJournal = () => {
     e.preventDefault();
     await axios.post('http://localhost:5000/entries', newEntry);
     setNewEntry({ title: '', content: '', isPrivate: true });
-    // Redirect back to entries list after submission
     window.location.href = '/entries';
   };
 

@@ -27,7 +27,7 @@ const JournalDetail = () => {
       setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);
-        navigate("/entries"); // Redirect to the entries list after deletion
+        navigate("/entries"); 
       }, 3000);
     } catch (error) {
       console.error("Error deleting journal:", error);
