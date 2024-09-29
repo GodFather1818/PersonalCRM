@@ -1,4 +1,4 @@
-// Requiring the Packages.
+
 
 require("dotenv").config();
 
@@ -17,10 +17,9 @@ const User = require('./models/user');
 const bcrypt = require("bcrypt");
 console.log("MongoDB URI", process.env.URI);
 
-// Initializing them for the usage.
 mongoose
   .connect(process.env.URI, {
-    useNewUrlParser: true, // This option is deprecated but might still be needed in older Mongoose versions
+    useNewUrlParser: true, 
     useUnifiedTopology: true,
   })
   .then(() => {
@@ -34,9 +33,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Email configuration
 const transporter = nodemailer.createTransport({
-  service: "gmail", // Email service
+  service: "gmail", 
   auth: {
     user: process.env.MAILID,
     pass: process.env.PASSWORD,
@@ -66,14 +64,12 @@ const sendReminderEmail = (task) => {
 
 cron.schedule('* * * * *', async () => {
   const now = new Date();
-  const soon = new Date(now.getTime() + 5 * 60 * 1000); // 5 minutes from now
+  const soon = new Date(now.getTime() + 5 * 60 * 1000); 
   const tasks = await Task.find({ reminder: { $gte: now, $lte: soon } });
 
   try {
-    // Find tasks with reminders set to trigger in the next 5 minutes
+    
     const tasks = await Task.find({ reminder: { $gte: now, $lte: soon } });
-
-    // Send reminder emails for each task
     tasks.forEach(task => {
       sendReminderEmail(task);
     });
@@ -94,7 +90,7 @@ app.post("/register",async (req, res)=> {
     try {
 
       const existingUser = await User.findOne({email: email});
-      if(user) {
+      if(existingUser) {
         return res.status(409).send({message: "User Already Exists!"});
       }
 
@@ -132,10 +128,6 @@ app.post("/login", async(req, res)=> {
     res.status(500).send({message: "Internal Server Error!"});
   }
   
-
-
-
-
 });
 
 
@@ -278,7 +270,6 @@ app.post("/password-manager/new", async (req, res) => {
   try {
       const { website, password, securityQuestions } = req.body;
 
-      // Hashing the answers of the security questions
       const hashedQuestions = await Promise.all(
           securityQuestions.map(async (q) => ({
               question: q.question,
@@ -288,7 +279,7 @@ app.post("/password-manager/new", async (req, res) => {
 
       const newPassword = new Password({
           website,
-          password, // Store the password directly
+          password, 
           securityQuestions: hashedQuestions,
       });
 
@@ -341,7 +332,6 @@ app.post("/password-manager/verify", async (req, res) => {
 });
 
 
-// ------------Listening the App ----------------
 
 app.listen(process.env.PORT, () =>
   console.log(`Server running on port ${process.env.PORT}`)
